@@ -1,0 +1,15 @@
+server:
+  port: 9200  #服务注册于发现中心
+spring:
+  application:
+    name: lagou-cloud-eureka  #在服务注册与发现中心的别名
+eureka:
+  client:
+    service-url:  #eureka的路径
+      defaultZone: http://LagouCloudEurekaServerB:9201/eureka/  #向其他(路径)服务注册与发现中心注册，搭建高可用的集群
+    fetch-registry: true  #是否向其他注册中心获取服务列表 单机模式为false
+    register-with-eureka: true #是否向其他客户端注册自己  单机模式为false
+  instance:
+    prefer-ip-address: true  #是否使用ip地址注册
+    instance-id: ${spring.cloud.client.ip-address}:${spring.application.name}:${server.port} #ip地址:id:端口号
+    hostname: LagouCloudEurekaServerA  #主机上的名称

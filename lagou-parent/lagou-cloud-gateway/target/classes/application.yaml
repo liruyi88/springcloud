@@ -1,0 +1,28 @@
+server:
+  port: 9300
+spring:
+  application:
+    name: lagou-cloud-gateway
+    #编写路由
+  cloud:
+    gateway:
+      routes:
+        - id: service-page-router
+          uri: lb://lagou-service-page
+          predicates:
+            - Path=/page/**
+        - id: service-product-router
+          uri: lb://lagou-service-product
+          predicates:
+            - Path=/product/**
+          filters:
+            - StripPrefix=1
+eureka:
+  client:
+    service-url:
+      defaultZone: http://LagouCloudEurekaServerA:9200/eureka/,http://LagouCloudEurekaServerB:9201/eureka/
+    fetch-registry: true
+    register-with-eureka: true
+  instance:
+    prefer-ip-address: true
+    instance-id: ${spring.cloud.client.ip-address}:${spring.application.name}:${server.port}

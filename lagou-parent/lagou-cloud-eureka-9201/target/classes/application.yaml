@@ -1,0 +1,15 @@
+server:
+  port: 9201
+spring:
+  application:
+    name: lagou-cloud-eureka-9201
+eureka:
+  client:
+    service-url:
+      defaultZone: http://LagouCloudEurekaServerA:9200/eureka/
+    fetch-registry: false  #是否向其他注册中心获取服务列表 单机模式不用
+    register-with-eureka: false #是否向其他客户端注册自己  单机模式不用
+  instance:
+    prefer-ip-address: true
+    instance-id: ${spring.cloud.client.ip-address}:${spring.application.name}:${server.port}
+    hostname: localhost

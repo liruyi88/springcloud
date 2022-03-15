@@ -1,0 +1,27 @@
+server:
+  port: 9000   #商品微服务端口号
+spring:
+  #数据源相关配置
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://192.168.108.128:3306/springbootdata?characterEncoding=utf-8
+    username: root
+    password: LiRuYi@666
+  #商品微服务在注册中心的别名
+  application:
+    name: lagou-service-product
+#服务注册与发现中心
+eureka:
+  instance:
+    #是否使用ip地址注册
+    prefer-ip-address: true
+    #在服务注册中心的id  ip:别名:端口号
+    instance-id: ${spring.cloud.client.ip-address}:${spring.application.name}:${server.port}
+  client:
+    service-url:
+      #服务注册中心的地址 集群模式
+      defaultZone: http://LagouCloudEurekaServerA:9200/eureka/,http://LagouCloudEurekaServerB:9201/eureka/
+    #获取服务列表
+    fetch-registry: true
+    #是否注册到eureka
+    register-with-eureka: true
